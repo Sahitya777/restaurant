@@ -45,6 +45,7 @@ module.exports = {
         whiteAlpha: "rgba(255,255,255,0.2)",
         cardColor: "#f5f5f5",
         cartBg: "#282a2c",
+        cartNumBg:"#e80013",
         cartItem: "#2e3033",
         cartTotal: "#343739",
       },
