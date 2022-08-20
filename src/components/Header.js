@@ -6,13 +6,22 @@ import {Link} from 'react-router-dom'
 import {app} from '../firebase.config'
 import {getAuth,signInWithPopup,GoogleAuthProvider} from 'firebase/auth'
 import { MdShoppingCart, MdLogout, MdAdd } from "react-icons/md";
+import { useStateValue } from '../context/StateProvider'
+import { actionType } from '../context/reducer'
 const Header = () => {
     const firebaseAuth=getAuth(app);
     const provider=new GoogleAuthProvider();
 
+
+    const [ {user}, dispatch] = useStateValue();
+
     const login=async()=>{
-        const response= await signInWithPopup(firebaseAuth,provider)
-        console.log(response);
+        const {user}= await signInWithPopup(firebaseAuth,provider);
+        const { refreshToken, providerData } = user;
+        dispatch({
+            type:actionType.SET_USER,
+            user:providerData[0],
+        });
     }
   return (
     <header className=' z-50 w-screen px-16 pt-7'>
@@ -40,7 +49,7 @@ const Header = () => {
                 <div className='relative'>
                     <motion.img
                     whileTap={{scale: 0.6}}
-                    src={Avatar} onClick={login} className="w-10 h-10 min-w-[40px] min-h-[40px] drop-shadow-2xl cursor-pointer" alt='userProfile'/>
+                    src={user? user.photoURL: Avatar} onClick={login} className="w-10 h-10 min-w-[40px] min-h-[40px] drop-shadow-2xl cursor-pointer rounded-full" alt='userProfile'/>
                 </div>
             </div>
         </div>
