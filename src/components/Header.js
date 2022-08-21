@@ -8,6 +8,7 @@ import {getAuth,signInWithPopup,GoogleAuthProvider} from 'firebase/auth'
 import { MdShoppingCart, MdLogout, MdAdd } from "react-icons/md";
 import { useStateValue } from '../context/StateProvider'
 import { actionType } from '../context/reducer'
+
 const Header = () => {
     const firebaseAuth=getAuth(app);
     const provider=new GoogleAuthProvider();
@@ -16,12 +17,16 @@ const Header = () => {
     const [ {user}, dispatch] = useStateValue();
 
     const login=async()=>{
-        const {user}= await signInWithPopup(firebaseAuth,provider);
-        const { refreshToken, providerData } = user;
-        dispatch({
-            type:actionType.SET_USER,
-            user:providerData[0],
-        });
+        if(!user){
+            const {user}= await signInWithPopup(firebaseAuth,provider);
+            const { refreshToken, providerData } = user;
+            dispatch({
+                type:actionType.SET_USER,
+                user:providerData[0],
+            });
+            localStorage.setItem('user',JSON.stringify(providerData[0]))
+        }
+        
     }
   return (
     <header className=' z-50 w-screen px-16 pt-7'>
@@ -50,6 +55,20 @@ const Header = () => {
                     <motion.img
                     whileTap={{scale: 0.6}}
                     src={user? user.photoURL: Avatar} onClick={login} className="w-10 h-10 min-w-[40px] min-h-[40px] drop-shadow-2xl cursor-pointer rounded-full" alt='userProfile'/>
+                    <div className='w-40 bg-gray-50 shadow-xl rounded-lg flex flex-col absolute top-11 right-0 px-4 py-2'>
+                        {
+                            user && user.email==="sahityanijhawan@gmail.com" &&(
+                                <Link to={'/createItem'}>
+                                    <p className="px-4 py-2 cursor-pointer hover:bg-slate-200 flex items-center gap-3">
+                                        New Item <MdAdd />
+                                    </p>
+                                </Link>
+                            )
+                        }
+                        <p className="px-4 py-2 cursor-pointer hover:bg-slate-200 flex items-center gap-3">Logout <MdLogout /> </p>
+
+
+                    </div>
                 </div>
             </div>
         </div>
