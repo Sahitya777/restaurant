@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Logo from'./img/logo.png'
 import Avatar from './img/avatar.png'
 import {motion} from 'framer-motion'
@@ -15,6 +15,7 @@ const Header = () => {
 
 
     const [ {user}, dispatch] = useStateValue();
+    const [IsMenu, setIsMenu] = useState(false)
 
     const login=async()=>{
         if(!user){
@@ -25,6 +26,9 @@ const Header = () => {
                 user:providerData[0],
             });
             localStorage.setItem('user',JSON.stringify(providerData[0]))
+        }
+        else{
+            setIsMenu(!IsMenu);
         }
         
     }
@@ -51,25 +55,34 @@ const Header = () => {
                     
 
                 </div>
-                <div className='relative'>
+                <motion.div 
+                initial={{opacity:0,scale:0.6}}
+                animate={{opacity:1,scale:1}}
+                exit={{opacity:0,scale:0.6}}
+                className='relative'
+                >
                     <motion.img
                     whileTap={{scale: 0.6}}
                     src={user? user.photoURL: Avatar} onClick={login} className="w-10 h-10 min-w-[40px] min-h-[40px] drop-shadow-2xl cursor-pointer rounded-full" alt='userProfile'/>
-                    <div className='w-40 bg-gray-50 shadow-xl rounded-lg flex flex-col absolute top-11 right-0 px-4 py-2'>
-                        {
-                            user && user.email==="sahityanijhawan@gmail.com" &&(
-                                <Link to={'/createItem'}>
-                                    <p className="px-4 py-2 cursor-pointer hover:bg-slate-200 flex items-center gap-3">
-                                        New Item <MdAdd />
-                                    </p>
-                                </Link>
-                            )
-                        }
-                        <p className="px-4 py-2 cursor-pointer hover:bg-slate-200 flex items-center gap-3">Logout <MdLogout /> </p>
-
-
-                    </div>
-                </div>
+                    {
+                        IsMenu &&(
+                            <div className='w-40 bg-gray-50 shadow-xl rounded-lg flex flex-col absolute top-11 right-0 px-4 py-2'>
+                                {
+                                    user && user.email==="sahityanijhawan@gmail.com" &&(
+                                        <Link to={'/createItem'}>
+                                            <p className="px-4 py-2 cursor-pointer hover:bg-slate-200 flex items-center gap-3">
+                                                New Item <MdAdd />
+                                            </p>
+                                        </Link>
+                                    )
+                                }
+                                <p className="px-4 py-2 cursor-pointer hover:bg-slate-200 flex items-center gap-3">
+                                    Logout <MdLogout /> 
+                                </p>
+                            </div>
+                        )
+                    }
+                </motion.div>
             </div>
         </div>
 
