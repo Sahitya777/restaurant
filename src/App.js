@@ -4,7 +4,7 @@ import {Routes,Route} from 'react-router-dom';
 import {AnimatePresence} from 'framer-motion'
 function App() {
   return (
-    <AnimatePresence>
+    <AnimatePresence exitBeforeEnter>
       <div className="w-screen h-screen flex  items-center justify-center bg-primary relative overflow-hidden">
         <div className='absolute inset-0 flex items-center justify-between flex-col w-full'>
           <Header/>
