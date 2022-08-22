@@ -115,14 +115,14 @@ const Header = () => {
                                             </p>
                                         </Link>
                                     )}
-                                <ul className='flex flex-col  gap-3'>
+                                <ul className=' mt-2 flex flex-col  gap-4'>
                                     <li className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer flex items-center gap-3'>Home <BiHome/> </li>
                                     <li className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer flex items-center gap-3'>Menu <BiMenu/> </li>
                                     <li className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer flex items-center gap-3'>About us <AiOutlineUser/> </li>
                                     <li className='text-base text-textColor hover:text-headingColor duration-100 transition-all ease-in-out cursor-pointer flex items-center gap-3'>Service <FiSettings/></li>
                                 </ul> 
                                
-                                <p className=" py-2 cursor-pointer hover:bg-slate-200 flex items-center gap-3">
+                                <p className="mt-3 py-2 px-4 flex items-center justify-center bg-gray-200 cursor-pointer hover:bg-slate-200 flex items-center gap-3">
                                     Logout <MdLogout /> 
                                 </p>
                             </motion.div>
